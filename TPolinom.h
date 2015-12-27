@@ -33,31 +33,55 @@ public:
 	}
 	void InsMonom(TMonom monom)
 	{
-		if (len != 0)
+		Reset();
+		while (pCurr->val.power > monom.power)
+			GoNext();
+		if (pCurr->val.power < monom.power)
 		{
-			for (Reset(); !IsEnd(); GoNext())
-			{
-				if (pCurr->val.power < monom.power)
-				{
-					if (pCurr != pFirst && pCurr!=pLast)
-						InsCurr(monom);
-					if (pCurr = pFirst)
-						InsFirst(monom);
-					if (pCurr = pLast)
-						InsLast(monom);
-					break;
-				}
-				if (pCurr->val.power == monom.power)
-				{
-					pCurr->val.coeff += monom.coeff;
-					break;
-				}
-			}
+			if (pCurr != pFirst)
+				InsCurr(monom);
+			else InsFirst(monom);
 		}
 		else
 		{
-			InsFirst(monom);
+			pCurr->val.coeff += monom.power;
+			if (pCurr->val.coeff == 0)
+				DelCurr();
 		}
+	}
+	TPolinom &operator +=(TPolinom &p)
+	{
+		Reset();
+		p.Reset();
+		while (true)
+		{
+			if (pCurr->val.power > p.pCurr->val.power)
+				GoNext();
+			else if (pCurr->val.power < p.pCurr->val.power)
+			{
+				if (len == 0)
+					InsFirst(p.pCurr->val);
+				else if (pCurr!=pFirst)
+					InsCurr(p.pCurr->val);
+				else InsFirst(p.pCurr->val);
+				p.GoNext();
+			}
+			else
+			{
+				pCurr->val.coeff += p.pCurr->val.coeff;
+				if (pCurr->val.coeff == 0)
+				{
+					if (pCurr!=pFirst)
+						DelCurr();
+					else DelFirst();
+				}
+				else GoNext();
+				p.GoNext();
+			}
+			if (p.IsEnd())
+				break;
+		}
+		return *this;
 	}
 	friend ostream& operator<<(ostream &out, TPolinom &polinom)
 	{

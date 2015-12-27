@@ -7,6 +7,8 @@ void main()
 	int step = 0;
 	int StepOfVariable;
 	int mas[][2] = { NULL };
+	int standmas[][2] = { { 1, 222 } };
+	TPolinom standpolinom(standmas, 1);
 	cout << "¬ведите размер полинома: ";
 	cin >> size;
 	for (int i = 0; i<size; i++)
@@ -27,9 +29,13 @@ void main()
 	}
 	TPolinom polinom(mas, size);
 	int comand;
-	/*for (;;)
+	cout << endl << "1 - добавить моном" << endl;
+	cout << "2 - operator +=" << endl;
+	cout << "3 - вывести полином на экран" << endl;
+	cout << "4 - выйти из программы" << endl;
+	for (;;)
 	{
-		cout << "¬вести команду: ";
+		cout << endl << "¬вести команду: ";
 		cin >> comand;
 		switch (comand)
 		{
@@ -54,7 +60,9 @@ void main()
 		}
 		case 2:
 		{
-				  //сложить полиномы
+				  polinom += standpolinom;
+				  cout << polinom << endl;
+				  break;
 		}
 		case 3:
 		{
@@ -66,5 +74,5 @@ void main()
 		default:
 			break;
 		}
-	}*/
+	}
 }
