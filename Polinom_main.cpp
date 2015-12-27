@@ -7,8 +7,8 @@ void main()
 	int step = 0;
 	int StepOfVariable;
 	int mas[][2] = { NULL };
-	int standmas[][2] = { { 1, 222 } };
-	TPolinom standpolinom(standmas, 1);
+	int standmas[][2] = { { 1, 222 }, {1,20} };
+	TPolinom standpolinom(standmas, 2);
 	cout << "¬ведите размер полинома: ";
 	cin >> size;
 	for (int i = 0; i<size; i++)

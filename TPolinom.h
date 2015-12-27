@@ -11,6 +11,11 @@ bool operator <(const TMonom &m1, const TMonom &m2)
 	return m1.power < m2.power;
 }
 
+bool operator >(const TMonom &m1, const TMonom &m2)
+{
+	return m1.power > m2.power;
+}
+
 class TPolinom : THeadList <TMonom>
 {
 public:
@@ -44,7 +49,7 @@ public:
 		}
 		else
 		{
-			pCurr->val.coeff += monom.power;
+			pCurr->val.coeff += monom.coeff;
 			if (pCurr->val.coeff == 0)
 				DelCurr();
 		}
@@ -53,33 +58,10 @@ public:
 	{
 		Reset();
 		p.Reset();
-		while (true)
+		while (p.pCurr->val.power != -1)
 		{
-			if (pCurr->val.power > p.pCurr->val.power)
-				GoNext();
-			else if (pCurr->val.power < p.pCurr->val.power)
-			{
-				if (len == 0)
-					InsFirst(p.pCurr->val);
-				else if (pCurr!=pFirst)
-					InsCurr(p.pCurr->val);
-				else InsFirst(p.pCurr->val);
-				p.GoNext();
-			}
-			else
-			{
-				pCurr->val.coeff += p.pCurr->val.coeff;
-				if (pCurr->val.coeff == 0)
-				{
-					if (pCurr!=pFirst)
-						DelCurr();
-					else DelFirst();
-				}
-				else GoNext();
-				p.GoNext();
-			}
-			if (p.IsEnd())
-				break;
+			InsMonom(p.pCurr->val);
+			p.GoNext();
 		}
 		return *this;
 	}
