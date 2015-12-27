@@ -39,10 +39,12 @@ public:
 			{
 				if (pCurr->val.power < monom.power)
 				{
-					if (pCurr != pFirst)
+					if (pCurr != pFirst && pCurr!=pLast)
 						InsCurr(monom);
-					else
+					if (pCurr = pFirst)
 						InsFirst(monom);
+					if (pCurr = pLast)
+						InsLast(monom);
 					break;
 				}
 				if (pCurr->val.power == monom.power)

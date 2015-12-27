@@ -27,7 +27,7 @@ public:
 		pos = -1;
 		len = 0;
 	}
-	~THeadList()
+	 ~THeadList()
 	{
 		if (len != NULL)
 		{
