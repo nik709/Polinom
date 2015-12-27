@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>;
+#include <iostream>
 
 using namespace std;
-
 template <class Type>
 class Tlink
 {
@@ -44,7 +43,7 @@ public:
 	}
 	void InsFirst(Type elem)
 	{
-		Tlink <Type> *tmp = new Tlink <Type>;
+		Tlink <Type> *tmp = new Tlink<Type>;
 		tmp->val = elem;
 		pHead->pNext = tmp;
 		if (len == 0)
@@ -59,5 +58,68 @@ public:
 		}
 		len++;
 		pos++;
+	}
+	void DelFirst()
+	{
+		if (len != 0)
+		{
+			pHead->pNext = pFirst->pNext;
+			delete pFirst;
+			pFirst = pHead->pNext;
+			len--;
+			pos--;
+		}
+	}
+	void InsCurr(Type elem)
+	{
+		Tlink <Type> *tmp = new Tlink <Type>;
+		tmp->val = elem;
+		pPred->pNext = tmp;
+		tmp->pNext = pCurr;
+		pCurr = tmp;
+		len++;
+	}
+	void DelCurr()
+	{
+		if (pCurr == pFirst)
+			DelFirst();
+		else
+		{
+			pPred->pNext = pCurr->pNext;
+			delete pCurr;
+			pCurr = pPred->pNext;
+		}
+	}
+	void Reset()
+	{
+		pCurr = pFirst;
+	}
+	void GoNext()
+	{
+		pPred = pCurr;
+		pCurr = pCurr->pNext;
+	}
+	bool IsEnd()
+	{
+		return pCurr == pStop;
+	}
+	void InsLast(Type elem)
+	{
+		Tlink <Type> *tmp = new Tlink<Type>;
+		tmp->val = elem;
+		if (len == 0)
+		{
+			pHead->pNext = tmp;
+			tmp->pNext = pStop;
+			pFirst = pLast = tmp;
+		}
+		else
+		{
+			pLast->pNext = tmp;
+			tmp->pNext = pStop;
+			pLast = tmp;
+		}
+		len++;
+		pos++; 
 	}
 };
